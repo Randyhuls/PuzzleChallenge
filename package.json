@@ -1,0 +1,23 @@
+{
+  "name": "puzzlechallenge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/game.bundle.js",
+  "scripts": {
+    "build": "rm -rf ./dist/* && webpack --config webpack.config.js && cp ./src/index.html ./dist/index.html && cp -rf ./src/assets ./dist/assets",
+    "update-gin": "npm i https://github.com/Randyhuls/gin.git",
+    "start": "npm run build && http-server ./dist -p ${1:-3002}"
+  },
+  "author": "R.C.B. Huls",
+  "license": "ISC",
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "gin": "git+https://github.com/Randyhuls/gin.git"
+  }
+}
