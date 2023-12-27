@@ -1,4 +1,5 @@
 import { GameObject, GameObjectProps } from 'gin/dist/src/core'
+import { createUniqueId } from '../utils'
 
 export enum TileType {
   BLUE = 'TILE_BLUE',
@@ -9,12 +10,14 @@ export enum TileType {
 }
 
 export enum TileState {
-  CLEARING,
-  IDLE,
-  SELECTED
+  DEFAULT,
+  CLEARED,
+  FALLING,
+  URGENT  
 }
 
-export interface TileProps extends GameObjectProps {
+export interface TileProps extends Omit<GameObjectProps, 'id'> {
+  id?: string
   type: TileType | null
   state: TileState | null
 }
@@ -24,10 +27,14 @@ export class Tile extends GameObject {
   public state: TileState | null
 
   constructor(props: TileProps) {
-    const { type, state } = props
-    super(props)
+    const { id, type, state } = props
+    super({ ...props, id: id || createUniqueId() })
 
     this.state = state
     this.type = type
+  }
+
+  get isActive() { 
+    return this.state !== null && (this.state as number) >= 0
   }
 }
